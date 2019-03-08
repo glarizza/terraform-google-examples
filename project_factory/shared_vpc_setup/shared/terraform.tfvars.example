@@ -1,0 +1,9 @@
+# Organization_id, folder_id, and billing_account are the numerical IDs of each 
+organization_id = ""
+folder_id       = ""
+billing_account = ""
+
+# This is the path to the service account JSON file needed for gcloud commands
+# run by Project Factory
+credentials_path = ""
+
