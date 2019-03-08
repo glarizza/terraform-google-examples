@@ -3,7 +3,7 @@ terraform {
 
   backend "gcs" {
     bucket = "phoogle-gary-state-bucket"
-    prefix = "state/project_and_iam"
+    prefix = "state/project_factory/project_and_iam"
   }
 }
 
