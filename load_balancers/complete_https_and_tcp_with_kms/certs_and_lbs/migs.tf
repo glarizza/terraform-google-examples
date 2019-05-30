@@ -29,7 +29,6 @@ data "template_file" "group-startup-script" {
 }
 
 module "instance_template" {
-  #source         = "terraform-google-modules/vm/google//modules/instance_template"
   source         = "git@github.com:glarizza/terraform-google-vm.git?ref=gl/outputs//modules/instance_template"
   subnetwork     = "${data.terraform_remote_state.network.subnets_self_links[0]}"
   startup_script = "${data.template_file.group-startup-script.rendered}"
@@ -43,8 +42,7 @@ module "instance_template" {
 }
 
 module "mig" {
-  #source            = "terraform-google-modules/vm/google//modules/mig"
-  source            = "git@github.com:glarizza/terraform-google-vm.git?ref=gl/outputs//modules/mig"
+  source            = "terraform-google-modules/vm/google//modules/mig"
   region            = "${var.region}"
   target_size       = "2"
   hostname          = "lb-mig"
@@ -52,15 +50,16 @@ module "mig" {
 
   update_policy = [
     {
-      minimal_action = "REPLACE"
-      type           = "OPPORTUNISTIC"
+      minimal_action        = "REPLACE"
+      type                  = "OPPORTUNISTIC"
+      max_surge_fixed       = "3"
+      max_unavailable_fixed = "3"
     },
   ]
 }
 
 module "mig2" {
-  #source            = "terraform-google-modules/vm/google//modules/mig"
-  source            = "git@github.com:glarizza/terraform-google-vm.git?ref=gl/outputs//modules/mig"
+  source            = "terraform-google-modules/vm/google//modules/mig"
   region            = "${var.region}"
   target_size       = "2"
   hostname          = "lb-mig2"
@@ -68,15 +67,16 @@ module "mig2" {
 
   update_policy = [
     {
-      minimal_action = "REPLACE"
-      type           = "OPPORTUNISTIC"
+      minimal_action        = "REPLACE"
+      type                  = "OPPORTUNISTIC"
+      max_surge_fixed       = "3"
+      max_unavailable_fixed = "3"
     },
   ]
 }
 
 module "tcp_mig" {
-  #source            = "terraform-google-modules/vm/google//modules/mig"
-  source            = "git@github.com:glarizza/terraform-google-vm.git?ref=gl/outputs//modules/mig"
+  source            = "terraform-google-modules/vm/google//modules/mig"
   region            = "${var.region}"
   target_size       = "2"
   target_pools      = ["${module.tcp_load_balancer.target_pool}"]
@@ -85,8 +85,10 @@ module "tcp_mig" {
 
   update_policy = [
     {
-      minimal_action = "REPLACE"
-      type           = "OPPORTUNISTIC"
+      minimal_action        = "REPLACE"
+      type                  = "OPPORTUNISTIC"
+      max_surge_fixed       = "3"
+      max_unavailable_fixed = "3"
     },
   ]
 }
