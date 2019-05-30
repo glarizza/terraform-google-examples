@@ -5,6 +5,14 @@ key necessary for encrypting secrets. If you have one or more of those
 already built feel free to use them, but if not then create them by executing
 this Terraform module (you will need to provide a `project_id` and `region`)
 
+Make sure that the `GOOGLE_APPLICATION_CREDENTIALS` environment variable has
+been populated with the path to the JSON key for the load balancer service
+account that was created by the `service_account` module. If it has not been
+set or the JSON key has not been downloaded, then you will need to ensure
+both of those steps have been followed.
+
+Next, execute Terraform:
+
     terraform init
     terraform plan -out kms.out
     terraform apply kms.out

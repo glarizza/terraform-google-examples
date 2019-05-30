@@ -17,7 +17,7 @@ the module is ready for execution.
 
 Make sure that the `GOOGLE_APPLICATION_CREDENTIALS` environment variable has
 been populated with the path to the JSON key for the load balancer service
-account that was created by the first module. If it has not been set or the
+account that was created by the `service_account` module. If it has not been set or the
 JSON key has not been downloaded, then you will need to ensure both of those
 steps have been followed
 
